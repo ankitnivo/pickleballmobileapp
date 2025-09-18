@@ -66,11 +66,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           tooltip: 'Notifications',
         ),
         Padding(
-          padding: const EdgeInsets.only(right: AppSpacing.md),
+          padding: const EdgeInsets.only(right: AppSpacing.lg),
           child: GestureDetector(
             onTap: onProfileTap,
             child: const CircleAvatar(
-              radius: 14,
+              radius: 20,
               backgroundImage: AssetImage('lib/assests/avatar.jpeg'),
             ),
           ),

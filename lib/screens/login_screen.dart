@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pickleballmobileapp/screens/home_page.dart';
+import 'package:pickleballmobileapp/screens/nav_page.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -141,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onPressed: () {
                           if (_formKey.currentState?.validate() ?? false) {
                            Navigator.pushReplacement(context, 
-                           MaterialPageRoute(builder: (context)=>HomeScreen())
+                           MaterialPageRoute(builder: (context)=>NavPage())
                            );
                           }
                         },
