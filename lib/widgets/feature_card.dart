@@ -1,6 +1,6 @@
 // lib/widgets/cards/feature_card.dart
 import 'package:flutter/material.dart';
-import 'base_card.dart';
+import 'package:pickleballmobileapp/widgets/base_card.dart';
 import '../../styles/app_theme.dart';
 
 class FeatureCard extends StatelessWidget {
@@ -19,24 +19,31 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Image container with dark background
-        Container(
-          height: 110,
-          decoration: BoxDecoration(
-            color: AppColors.darkBg,
-            borderRadius: BorderRadius.circular(AppRadius.xl),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
+    return AspectRatio(
+      aspectRatio: 1.25, // keeps proportions similar to design
+      child: Stack(
+        clipBehavior: Clip.none, // allow text card to overflow slightly
+        children: [
+          // Base image with rounded corners
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              height: 140,
+              decoration:  BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        // Text card overlay
-        BaseCard(
+
+          // Overlapped info card
+          Positioned(
+            left: 12,
+            right: 12,
+            bottom: -18, // pull it outside to create overlap
+            child: BaseCard(
           padding: const EdgeInsets.all(AppSpacing.md),
           onTap: onTap,
           child: Column(
@@ -48,7 +55,9 @@ class FeatureCard extends StatelessWidget {
             ],
           ),
         ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

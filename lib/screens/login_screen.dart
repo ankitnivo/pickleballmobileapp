@@ -12,19 +12,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _agree = false;
 
   InputDecoration _pillDecoration(String hint, IconData icon) {
-    return InputDecoration(
-      hintText: hint,
-      prefixIcon: Icon(icon),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
+  return InputDecoration(
+    hintText: hint,
+    prefixIcon: SizedBox(
+      width: 60, // enough width for icon + divider
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: Colors.black),
+          SizedBox(
+            height: 20, // adjust height of divider
+            child: VerticalDivider(
+              color: Colors.grey,
+              thickness: 1,
+              width: 20,
+            ),
+          ),
+        ],
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
-        borderSide: const BorderSide(color: Colors.black26),
-      ),
-    );
-  }
+    ),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30),
+      borderSide: const BorderSide(color: Colors.black26),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +121,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CheckboxListTile(
+                              activeColor: Colors.orange,
+                              checkColor: Colors.black,
                               contentPadding: EdgeInsets.zero,
                               dense: true,
                               value: state.value ?? false,
@@ -215,10 +234,12 @@ Widget buildOptionSignIn(BuildContext context) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              Icon(Icons.g_mobiledata, size: 24, color: Colors.red),
+            children: [
+              SizedBox(
+                height: 20,
+                child: Image.asset('lib/assests/google_logo.jpeg',fit: BoxFit.fitWidth,)),
               SizedBox(width: 8),
-              Flexible(child: Text('Continue with Google')),
+              Flexible(child: Text('Google')),
             ],
           ),
         ),
@@ -240,9 +261,9 @@ Widget buildOptionSignIn(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: const [
-              Icon(Icons.apple, size: 20, color: Colors.black),
+              Icon(Icons.apple, size: 28, color: Colors.black),
               SizedBox(width: 8),
-              Flexible(child: Text('Continue with Apple')),
+              Flexible(child: Text('Apple')),
             ],
           ),
         ),

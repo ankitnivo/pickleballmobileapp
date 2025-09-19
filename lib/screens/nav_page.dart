@@ -1,7 +1,9 @@
 // lib/screens/nav_page.dart
 import 'package:flutter/material.dart';
 import 'package:pickleballmobileapp/screens/book_screen.dart';
+import 'package:pickleballmobileapp/screens/conversationn_screen.dart';
 import 'package:pickleballmobileapp/screens/more_screen.dart';
+import 'package:pickleballmobileapp/screens/notifications_screen.dart';
 import 'package:pickleballmobileapp/screens/play_page.dart';
 import 'package:pickleballmobileapp/screens/profile_screen.dart';
 import 'package:pickleballmobileapp/styles/app_theme.dart';
@@ -38,48 +40,69 @@ class _NavPageState extends State<NavPage> {
     // Implement location picker
   }
 
-  void _handleSearch() {
+  void _handleMessage() {
     // Implement search
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ConversationsScreen()),
+    );
   }
 
   void _showNotifications() {
     // Show notifications
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NotificationsScreen()),
+    );
   }
 
   void _showProfile() {
     // Show profile
-    Navigator.push(context,
-    MaterialPageRoute(builder: (context)=>ProfileScreen()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfileScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.cream,
-      appBar:_currentIndex == moreTabIndex
-      ? null
-      : CustomAppBar(
-          location: 'Houston, Texas',
-          onLocationTap: _showLocationPicker,
-          onMessageTap: _handleSearch,
-          onNotificationTap: _showNotifications,
-          onProfileTap: _showProfile,
-        ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      appBar: _currentIndex == moreTabIndex
+          ? null
+          : CustomAppBar(
+              location: 'Houston, Texas',
+              onLocationTap: _showLocationPicker,
+              onMessageTap: _handleMessage,
+              onNotificationTap: _showNotifications,
+              onProfileTap: _showProfile,
+            ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColors.cream,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.sports_tennis), label: 'Play'),
-          BottomNavigationBarItem(icon: Icon(Icons.attractions_sharp), label: 'Event'),
-          BottomNavigationBarItem(icon: Icon(Icons.sports_baseball_outlined), label: 'Book'),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              _currentIndex == 0 ? Icons.home_filled : Icons.home_outlined,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_tennis),
+            label: 'Play',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.attractions_sharp),
+            label: 'Event',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_baseball_outlined),
+            label: 'Book',
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'More'),
         ],
         onTap: _onBottomNavTap,

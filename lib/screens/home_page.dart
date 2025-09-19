@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       padding: EdgeInsets.all(padding),
       children: [
         _buildFeatureCardsRow(),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.xxl),
 
         // Train with us card
         MediaCard(

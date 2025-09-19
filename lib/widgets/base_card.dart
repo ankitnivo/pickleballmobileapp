@@ -20,18 +20,21 @@ class BaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: color ?? AppColors.white,
-      elevation: elevation ?? AppElevation.low,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.xl),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppRadius.xl),
-        onTap: onTap,
-        child: Padding(
-          padding: padding ?? const EdgeInsets.all(AppSpacing.lg),
-          child: child,
+    return SizedBox(
+      width: 250,
+      child: Card(
+        color: color ?? AppColors.white,
+        elevation: elevation ?? AppElevation.low,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+          onTap: onTap,
+          child: Padding(
+            padding: padding ?? const EdgeInsets.all(AppSpacing.lg),
+            child: child,
+          ),
         ),
       ),
     );

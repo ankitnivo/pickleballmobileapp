@@ -59,11 +59,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib\assests\VERSYON-LOGO-01.png
-    - lib\assests\ball_image.jpg
-    - lib\assests\avatar.jpeg
-    - lib\assests\tennis1.jpeg
-    - lib\assests\tennis2.jpeg
+    - lib/assests/VERSYON-LOGO-01.png
+    - lib/assests/ball_image.jpg
+    - lib/assests/avatar.jpeg
+    - lib/assests/tennis1.jpeg
+    - lib/assests/tennis2.jpeg
+    - lib/assests/google_logo.jpeg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
