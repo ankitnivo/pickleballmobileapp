@@ -10,12 +10,12 @@ class PlayPage extends StatefulWidget {
 
 class _PlayPageState extends State<PlayPage> with SingleTickerProviderStateMixin {
   // Top tabs
-  final List<String> _tabs = const ['Calendar', 'Recommended', 'My Sports', 'Other Sports'];
+  final List<String> _tabs = const ['Calendar', 'Recommended', ];
   int _tabIndex = 1; // “Recommended” as in screenshot
 
   // Category chip
   final List<String> _sports = const ['Pickleball'];
-  int _sportIndex = 0;
+  final int _sportIndex = 0;
 
   // Date chips
   late final List<DateTime> _dates;

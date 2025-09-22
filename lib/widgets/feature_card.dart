@@ -19,45 +19,42 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.25, // keeps proportions similar to design
-      child: Stack(
-        clipBehavior: Clip.none, // allow text card to overflow slightly
-        children: [
-          // Base image with rounded corners
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              height: 140,
-              decoration:  BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.cover,
-                ),
+    return Stack(
+      clipBehavior: Clip.none, // allow text card to overflow slightly
+      children: [
+        // Base image with rounded corners
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 140,
+            decoration:  BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
               ),
             ),
           ),
-
-          // Overlapped info card
-          Positioned(
-            left: 12,
-            right: 12,
-            bottom: -18, // pull it outside to create overlap
-            child: BaseCard(
-          padding: const EdgeInsets.all(AppSpacing.md),
-          onTap: onTap,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: AppTextStyles.cardTitle),
-              const SizedBox(height: 6),
-              Text(subtitle, style: AppTextStyles.cardSubtitle),
-            ],
-          ),
         ),
-          ),
-        ],
-      ),
+    
+        // Overlapped info card
+        Positioned(
+          left: -4,
+          right: -4,
+          bottom: -18, // pull it outside to create overlap
+          child: BaseCard(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    onTap: onTap,
+                    child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: AppTextStyles.cardTitle),
+            const SizedBox(height: 6),
+            Text(subtitle, style: AppTextStyles.cardSubtitle),
+          ],
+                    ),
+                  ),
+        ),
+      ],
     );
   }
 }

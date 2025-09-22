@@ -187,14 +187,14 @@ class _SettingTile extends StatelessWidget {
         children: [
           if (trailingBadge != null)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: const Color(0xFFFFF0B3),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
                 trailingBadge!,
-                style: t.labelLarge?.copyWith(color: Colors.black87, fontWeight: FontWeight.w800),
+                style: t.labelLarge?.copyWith(color: Colors.black87, fontWeight: FontWeight.w800,fontSize: 10),
               ),
             ),
           const SizedBox(width: 8),

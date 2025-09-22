@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pickleballmobileapp/screens/home_page.dart';
-import 'package:pickleballmobileapp/screens/nav_page.dart';
 import 'dart:async';
 
 import 'package:pickleballmobileapp/screens/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -74,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _navigateToOnboarding() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const NavPage()),
+      MaterialPageRoute(builder: (context) => const OnBoardingScreen()),
     );
   }
 
@@ -130,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen>
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
-                          'lib/assests/VERSYON-LOGO-01.png',
+                          'lib/assests/splash_logo.png',
                           fit: BoxFit.contain,
                         ),
                       ),

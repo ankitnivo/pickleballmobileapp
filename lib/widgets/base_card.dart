@@ -21,7 +21,7 @@ class BaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 250,
+      width: 30,
       child: Card(
         color: color ?? AppColors.white,
         elevation: elevation ?? AppElevation.low,

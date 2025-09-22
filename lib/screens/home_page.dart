@@ -1,5 +1,7 @@
 // lib/screens/home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:pickleballmobileapp/screens/conversationn_screen.dart';
+import 'package:pickleballmobileapp/screens/nav_page.dart';
 import 'package:pickleballmobileapp/widgets/feature_card.dart';
 import 'package:pickleballmobileapp/widgets/icon_tile.dart';
 import 'package:pickleballmobileapp/widgets/media_card.dart';
@@ -17,14 +19,15 @@ class HomeScreen extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(padding),
       children: [
-        _buildFeatureCardsRow(),
+        _buildFeatureCardsRow(context),
         const SizedBox(height: AppSpacing.xxl),
 
         // Train with us card
         MediaCard(
           imagePath: 'lib/assests/ball_image.jpg',
           title: 'Train With us',
-          subtitle: 'Connect with certified coaches\nnearby to level up your game',
+          subtitle:
+              'Connect with certified coaches\nnearby to level up your game',
           onTap: () => _handleTraining(context),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -32,7 +35,8 @@ class HomeScreen extends StatelessWidget {
         // Promo card
         PromoCard(
           headline: 'No Pickleball Slots?',
-          subtitle: 'We\'re Hosting a Sesh this Weekend\nSo Bring On Your Best Shot!',
+          subtitle:
+              'We\'re Hosting a Sesh this Weekend\nSo Bring On Your Best Shot!',
           ctaText: 'Wanna Play?',
           onCtaTap: () => _handlePromo(context),
         ),
@@ -48,12 +52,12 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
 
         // Bottom action tiles
-        _buildActionTilesRow(),
+        _buildActionTilesRow(context),
       ],
     );
   }
 
-  Widget _buildFeatureCardsRow() {
+  Widget _buildFeatureCardsRow(context) {
     return Row(
       children: [
         Expanded(
@@ -61,7 +65,12 @@ class HomeScreen extends StatelessWidget {
             imagePath: 'lib/assests/tennis1.jpeg',
             title: 'New Event',
             subtitle: 'Find Players and join their activities',
-            onTap: () => print('New Event tapped'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NavPage(currentPage: 1,)),
+              );
+            },
           ),
         ),
         const SizedBox(width: AppSpacing.md),
@@ -69,22 +78,27 @@ class HomeScreen extends StatelessWidget {
           child: FeatureCard(
             imagePath: 'lib/assests/tennis2.jpeg',
             title: 'Find',
-            subtitle: 'Book your venues nearby',
-            onTap: () => print('Find tapped'),
+            subtitle: 'Book your venues\n nearby',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NavPage(currentPage: 2,)),
+              );
+            },
           ),
         ),
       ],
     );
   }
 
-  Widget _buildActionTilesRow() {
+  Widget _buildActionTilesRow(context) {
     return Row(
       children: [
         Expanded(
           child: IconTile(
             icon: Icons.receipt_long_outlined,
             title: 'Bookings',
-            subtitle: 'Game History',
+            subtitle: 'Game\n History',
             onTap: () => print('Bookings tapped'),
           ),
         ),
@@ -93,8 +107,8 @@ class HomeScreen extends StatelessWidget {
           child: IconTile(
             icon: Icons.people_outline,
             title: 'Playpals',
-            subtitle: 'Manage Players',
-            onTap: () => print('Playpals tapped'),
+            subtitle: 'Manage\n Players',
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> ConversationsScreen())),
           ),
         ),
       ],
@@ -108,6 +122,10 @@ class HomeScreen extends StatelessWidget {
 
   void _handlePromo(BuildContext context) {
     // Handle promo action
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NavPage(currentPage: 2,)),
+    );
   }
 
   void _handleGroups(BuildContext context) {

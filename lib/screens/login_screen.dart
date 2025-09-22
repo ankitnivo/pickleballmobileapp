@@ -50,8 +50,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 100),
-            Image.asset('lib/assests/VERSYON-LOGO-01.png'),
+            const SizedBox(height: 20),
+            Image.asset('lib/assests/splash_logo.png'),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),

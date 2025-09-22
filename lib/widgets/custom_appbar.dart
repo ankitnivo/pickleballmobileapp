@@ -1,5 +1,6 @@
 // lib/widgets/common/custom_app_bar.dart
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import '../../styles/app_theme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -24,6 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: AppColors.cream,
       elevation: 0,
       titleSpacing: AppSpacing.lg,
@@ -57,12 +59,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: onMessageTap,
-          icon: const Icon(Icons.message_outlined, color: AppColors.textPrimary),
+          icon: const Icon(LineIcons.facebookMessenger, color: AppColors.textPrimary),
           tooltip: 'Message',
         ),
         IconButton(
           onPressed: onNotificationTap,
-          icon: const Icon(Icons.notifications_none, color: AppColors.textPrimary),
+          icon: const Icon(LineIcons.bell, color: AppColors.textPrimary),
           tooltip: 'Notifications',
         ),
         Padding(

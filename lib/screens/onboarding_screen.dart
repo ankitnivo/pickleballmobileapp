@@ -32,7 +32,7 @@ class OnBoardingScreen extends StatelessWidget {
                   Column(
                     children: [
                       Image.asset(
-                        "lib/assests/VERSYON-LOGO-01.png",
+                        "lib/assests/splash_logo.png",
                         height: 120,
                       ),
                       const SizedBox(height: 10),
