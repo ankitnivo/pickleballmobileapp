@@ -1,147 +1,105 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:pickleballmobileapp/screens/onboarding_screen.dart';
+import 'package:video_player/video_player.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _scaleController;
-  late AnimationController _fadeController;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _fadeAnimation;
+    with SingleTickerProviderStateMixin {
+  late VideoPlayerController _controller;
+  bool _ready = false;
 
   @override
   void initState() {
     super.initState();
-    
-    // Initialize animation controllers
-    _scaleController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-    
-    _fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
+    // Show poster instantly while video initializes.
+    _controller = VideoPlayerController.asset('lib/assests/splash_video.mp4')
+      ..initialize().then((_) async {
+        // Remove native splash only when we actually have pixels to show.
+        FlutterNativeSplash.remove();
+        // Autoplay and loop (or keep single play by removing loop)
+        await _controller.play();
+        setState(() => _ready = true);
+      });
 
-    // Scale animation: small to large (zoom out effect like Myntra)
-    _scaleAnimation = Tween<double>(
-      begin: 0.5, // Start small
-      end: 4.0,   // Scale up to 4x (zoom out to edges)
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.easeInOutCubic,
-    ));
-
-    // Fade animation: visible to transparent
-    _fadeAnimation = Tween<double>(
-      begin: 1.0, // Fully visible
-      end: 0.0,   // Completely transparent
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
-    ));
-
-    // Start the splash animation sequence
-    _startSplashAnimation();
+    // Navigate when video finishes (single play)
+    _controller.addListener(() {
+      if (_controller.value.isInitialized &&
+          !_controller.value.isPlaying &&
+          _controller.value.position >= _controller.value.duration) {
+        _goNext();
+      }
+    });
   }
 
-  void _startSplashAnimation() async {
-    // Wait a moment before starting
-    await Future.delayed(const Duration(milliseconds: 500));
-    
-    // Start scale animation
-    _scaleController.forward();
-    
-    // Start fade animation after scale begins
-    await Future.delayed(const Duration(milliseconds: 800));
-    _fadeController.forward();
-    
-    // Navigate to onboarding after animation completes
-    await Future.delayed(const Duration(milliseconds: 1200));
-    _navigateToOnboarding();
-  }
-
-  void _navigateToOnboarding() {
+  void _goNext() {
+    if (!mounted) return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const OnBoardingScreen()),
+      MaterialPageRoute(builder: (_) => const OnBoardingScreen()),
     );
   }
 
   @override
   void dispose() {
-    _scaleController.dispose();
-    _fadeController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Background image with dark opacity overlay
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/assests/ball_image.jpg'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Color.fromRGBO(0, 0, 0, 0.6), // Dark overlay with 60% opacity
-                  BlendMode.darken,
-                ),
-              ),
+Widget build(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+
+  Widget poster = SizedBox(
+    width: size.width,
+    height: size.height,
+    child: Image.asset(
+      'lib/assests/splash_logo.png',
+      //fit: BoxFit.cover,
+      height: 250,
+      width: 250,
+    ),
+  );
+
+  Widget video = _controller.value.isInitialized
+      ? SizedBox(
+          width: size.width,
+          height: size.height,
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: _controller.value.size.width,
+              height: _controller.value.size.height,
+              child: VideoPlayer(_controller),
             ),
           ),
-          
-          // Animated logo in the center
-          Center(
-            child: AnimatedBuilder(
-              animation: Listenable.merge([_scaleAnimation, _fadeAnimation]),
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _scaleAnimation.value,
-                  child: Opacity(
-                    opacity: _fadeAnimation.value,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.3),
-                            blurRadius: 20,
-                            spreadRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          'lib/assests/splash_logo.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        )
+      : const SizedBox.shrink();
+
+  return Scaffold(
+    backgroundColor: const Color(00000000),
+    body: AnimatedCrossFade(
+      duration: const Duration(milliseconds: 350),
+      crossFadeState:
+          _ready ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      firstChild: poster,
+      secondChild: video,
+      // Provide layout hints so both children get consistent constraints
+      layoutBuilder: (topChild, topKey, bottomChild, bottomKey) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned.fill(key: bottomKey, child: bottomChild),
+            Positioned.fill(key: topKey, child: topChild),
+          ],
+        );
+      },
+    ),
+  );
 }
 
-
+}

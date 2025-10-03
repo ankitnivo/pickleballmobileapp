@@ -92,7 +92,7 @@ class _PlayPageState extends State<PlayPage> with SingleTickerProviderStateMixin
                 return GestureDetector(
                   onTap: () => setState(() => _dateIndex = i),
                   child: Container(
-                    width: 64,
+                    width: 50,
                     decoration: BoxDecoration(
                       color: selected ? Colors.white : const Color(0xFFFFF0DC),
                       borderRadius: BorderRadius.circular(12),
